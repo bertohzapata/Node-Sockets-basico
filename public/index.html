@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Programa de Sockets</title>
+</head>
+
+<body>
+    <h1>Programa de Sockets</h1>
+
+
+    <script src="socket.io/socket.io.js"></script>
+    <script>
+    
+    var socket = io();
+
+    // mensaje de canal de comunicación abierto
+    // Escuchar
+    socket.on('connect', function() {
+        console.log('Conectado al servidor');
+    });
+    // Escuchar
+    socket.on('disconnect', function(){
+        console.log('Perdimos conexion con el servidor');
+    });
+
+    //Paso 4 - Enviar información
+    /* socket.emit('enviarMensaje', {
+        usuario: 'Humberto',
+        mensaje: 'Hola Mundo'
+    }); */
+
+    //Paso 6 - Retroalimentación de emisiones
+    socket.emit('enviarMensaje', {
+        usuario: 'Humberto',
+        mensaje: 'Hola Mundo'
+    }, function(resp){
+        //console.log('Se disparó el callback');
+        console.log('Respuesta del servidor: ', resp);
+    });
+
+    //Paso 5 - Recibir información desde el servidor
+    socket.on('enviarMensaje', function(mensajeServidor) {
+        console.log('Servidor:', mensajeServidor);
+    });
+
+    </script>
+</body>
+
+</html>
